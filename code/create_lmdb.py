@@ -21,8 +21,8 @@ from caffe.proto import caffe_pb2
 import lmdb
 
 #Size of images
-IMAGE_WIDTH = 320
-IMAGE_HEIGHT = 240
+IMAGE_WIDTH = 227
+IMAGE_HEIGHT = 227
 
 def transform_img(img, img_width=IMAGE_WIDTH, img_height=IMAGE_HEIGHT):
 
@@ -46,16 +46,16 @@ def make_datum(img, label):
         label=label,
         data=np.rollaxis(img, 2).tostring())
 
-train_lmdb = os.path.dirname(os.path.realpath(__file__)) + '/../train_lmdb'
-validation_lmdb = os.path.dirname(os.path.realpath(__file__)) + '/../validation_lmdb'
+train_lmdb = os.path.dirname(os.path.realpath(__file__)) + '/train_lmdb'
+validation_lmdb = os.path.dirname(os.path.realpath(__file__)) + '/validation_lmdb'
 
 os.system('rm -rf  ' + train_lmdb)
 os.system('rm -rf  ' + validation_lmdb)
 os.system('mkdir  ' + train_lmdb)
 os.system('mkdir  ' + validation_lmdb)
 
-train_data = [img for img in glob.glob("../train/*jpg")]
-test_data = [img for img in glob.glob("../test/*jpg")]
+train_data = [img for img in glob.glob("./train/*jpg")]
+test_data = [img for img in glob.glob("./test/*jpg")]
 
 #Shuffle train_data
 random.shuffle(train_data)
@@ -80,7 +80,7 @@ with in_db.begin(write=True) as in_txn:
         elif 'doorstop' in img_path:
             label = 4
         else:
-            label = 6
+            label = 5
         datum = make_datum(img, label)
         in_txn.put('{:0>5d}'.format(in_idx), datum.SerializeToString())
         print '{:0>5d}'.format(in_idx) + ':' + img_path
@@ -107,7 +107,7 @@ with in_db.begin(write=True) as in_txn:
         elif 'doorstop' in img_path:
             label = 4
         else:
-            label = 6
+            label = 5
         datum = make_datum(img, label)
         in_txn.put('{:0>5d}'.format(in_idx), datum.SerializeToString())
         print '{:0>5d}'.format(in_idx) + ':' + img_path

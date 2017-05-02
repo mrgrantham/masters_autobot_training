@@ -49,4 +49,5 @@ Enter the following command to generate the mean photo of your dataset
 
 Enter the following command to initiate training
 
-        /home/james/caffe/build/tools/caffe train --solver /home/james/autobot/autobot_solver.prototxt 2>&1 | tee /home/james/autobot/autobot_train.log
+        /home/james/caffe/build/tools/caffe train --solver /home/james/autobot/autobot_googlenet/quick_solver.prototxt 2>&1 | tee /home/james/autobot/autobot_googlenet/autobot_googlenet_train.log        
+        /home/james/caffe/build/tools/caffe train --solver /home/james/autobot/Catdog_net/autobot_solver.prototxt 2>&1 | tee /home/james/autobot/Catdog_net/autobot__train.log
