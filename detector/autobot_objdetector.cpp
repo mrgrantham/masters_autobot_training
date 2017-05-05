@@ -21,12 +21,9 @@ static void help()
             "\tUsing OpenCV version " << CV_VERSION << "\n" << endl;
 }
 
-void detectAndDraw( Mat& img, CascadeClassifier& stopCascade,
-                    CascadeClassifier& crossCascade,
-                    double scale);
+void detectAndDraw( Mat& img, CascadeClassifier& stopCascade, double scale);
 
-string stopCascadeName;
-string crossCascadeName;
+string caffeModelName;
 
 int main( int argc, const char** argv )
 {
@@ -34,13 +31,12 @@ int main( int argc, const char** argv )
     Mat frame, image;
     string inputName;
     bool tryflip;
-    CascadeClassifier stopCascade, crossCascade;
+    CascadeClassifier caffeModel;
     double scale;
 
     cv::CommandLineParser parser(argc, argv,
         "{help h||}"
-        "{stop-cascade|../../data/haarcascades/haarcascade_frontalface_alt.xml|}"
-        "{cross-cascade|../../data/haarcascades/haarcascade_eye_tree_eyeglasses.xml|}"
+        "{caffemodel|./autobot_googlenet_snap/bvlc_googlenet_quick_iter_2400000.caffemodel|}"
         "{scale|1|}"
         "{@filename||}"
     );
@@ -49,8 +45,8 @@ int main( int argc, const char** argv )
         help();
         return 0;
     }
-    stopCascadeName = parser.get<string>("stop-cascade");
-    crossCascadeName = parser.get<string>("cross-cascade");
+    caffeModelName = parser.get<string>("caffemodel");
+
     scale = parser.get<double>("scale");
     if (scale < 1)
         scale = 1;
@@ -60,15 +56,9 @@ int main( int argc, const char** argv )
         parser.printErrors();
         return 0;
     }
-    if ( !crossCascade.load( crossCascadeName ) ) 
+    if( !caffeModel.load( caffeModelName ) )
     {
-        cerr << "ERROR: Could not load crosswalk classifier cascade" << endl;
-        help();
-        return -1;
-    }
-    if( !stopCascade.load( stopCascadeName ) )
-    {
-        cerr << "ERROR: Could not load stop sign classifier cascade" << endl;
+        cerr << "ERROR: Could not load caffe model" << endl;
         help();
         return -1;
     }
@@ -100,12 +90,12 @@ int main( int argc, const char** argv )
     return 0;
 }
 
-void detectAndDraw( Mat& img, CascadeClassifier& stopCascade,
-                    CascadeClassifier& crossCascade,
-                    double scale)
+void detectAndDraw( Mat& img, CascadeClassifier& stopCascade, double scale)
 {
     double t = 0;
-    vector<Rect> crossSigns, stopSigns;
+
+    // stores the bounds of the various doors 
+    vector<Rect> doors;
     static Scalar stopColor = Scalar(0, 0, 255);
     static Scalar crossColor = Scalar(0, 255, 255);
     Mat gray, smallImg;

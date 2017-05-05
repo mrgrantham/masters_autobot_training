@@ -21,9 +21,9 @@ import matplotlib.pylab as plt
 plt.style.use('ggplot')
 
 
-caffe_path = '/home/james/caffe/'
-model_log_path = sys.argv[1]
-learning_curve_path = sys.argv[2]
+caffe_path = sys.argv[1]
+model_log_path = sys.argv[2]
+learning_curve_path = sys.argv[3]
 
 #Get directory where the model logs is saved, and move to it
 model_log_dir_path = os.path.dirname(model_log_path)

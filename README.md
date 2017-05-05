@@ -33,7 +33,7 @@ This component of the overall projects consists of the following peices
         Therefore, the first change is to remove the input layers (layers that push "data" and "labels" during TRAIN and TEST phases). To replace the input layers you need to add the following declaration:
 
         input: "data"
-        input_shape: { dim:1 dim:3 dim:224 dim:224 }
+        input_shape: { dim:1 dim:3 dim:227 dim:227 }
         
         This declaration does not provide the actual data for the net, but it tells the net what shape to expect, allowing caffe to pre-allocate necessary resources.
 
@@ -50,4 +50,17 @@ Enter the following command to generate the mean photo of your dataset
 Enter the following command to initiate training
 
         /home/james/caffe/build/tools/caffe train --solver /home/james/autobot/autobot_googlenet/quick_solver.prototxt 2>&1 | tee /home/james/autobot/autobot_googlenet/autobot_googlenet_train.log        
-        /home/james/caffe/build/tools/caffe train --solver /home/james/autobot/Catdog_net/autobot_solver.prototxt 2>&1 | tee /home/james/autobot/Catdog_net/autobot__train.log
+
+# modified to append log and build off of a prior model
+    /home/james/caffe/build/tools/caffe train --weights /home/james/autobot/autobot_googlenet_snap/bvlc_googlenet_quick_iter_2400000.caffemodel --solver /home/james/autobot/autobot_googlenet/quick_solver.prototxt 2>&1 | tee -a /home/james/autobot/autobot_googlenet/autobot_googlenet_train.log
+
+# Instructions on how to resume if training should stall
+[Caffe Training Resume](https://github.com/BVLC/caffe/wiki/Training-and-Resuming)
+
+    /home/james/caffe/build/tools/caffe train -solver /home/james/autobot/autobot_googlenet/quick_solver.prototxt -snapshot /home/james/autobot/autobot_googlenet_snap_2/bvlc_googlenet_iter_120000.solverstate 2>&1 | tee -a /home/james/autobot/autobot_googlenet/autobot_googlenet_train.log
+
+# Plot the learning curve
+    python plot_learning_curve.py /home/james/caffe/ /home/james/autobot/autobot_googlenet/autobot_googlenet_train_cp.log /home/james/autobot/autobot_googlenet/autobot_googlenet_curve.png
+
+
+    /home/james/caffe/build/tools/caffe train --solver /home/james/autobot/Catdog_net/autobot_solver.prototxt 2>&1 | tee /home/james/autobot/Catdog_net/autobot__train.log

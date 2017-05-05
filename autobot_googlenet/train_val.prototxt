@@ -7,12 +7,17 @@ layer {
   include {
     phase: TRAIN
   }
-  transform_param {
+ # transform_param {
+ #   mirror: true
+ #   crop_size: 227
+ #   mean_value: 104
+ #   mean_value: 117
+ #   mean_value: 123
+ # }
+    transform_param {
     mirror: true
     crop_size: 227
-    mean_value: 104
-    mean_value: 117
-    mean_value: 123
+    mean_file: "/home/james/autobot/mean.binaryproto"
   }
   data_param {
     source: "/home/james/autobot/train_lmdb"
@@ -28,12 +33,17 @@ layer {
   include {
     phase: TEST
   }
+ # transform_param {
+ #   mirror: false
+ #   crop_size: 227
+ #   mean_value: 104
+ #   mean_value: 117
+ #   mean_value: 123
+ # }
   transform_param {
     mirror: false
     crop_size: 227
-    mean_value: 104
-    mean_value: 117
-    mean_value: 123
+    mean_file: "/home/james/autobot/mean.binaryproto"
   }
   data_param {
     source: "/home/james/autobot/validation_lmdb"
