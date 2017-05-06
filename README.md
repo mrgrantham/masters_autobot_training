@@ -59,8 +59,26 @@ Enter the following command to initiate training
 
     /home/james/caffe/build/tools/caffe train -solver /home/james/autobot/autobot_googlenet/quick_solver.prototxt -snapshot /home/james/autobot/autobot_googlenet_snap_2/bvlc_googlenet_iter_120000.solverstate 2>&1 | tee -a /home/james/autobot/autobot_googlenet/autobot_googlenet_train.log
 
+# Parse the log to plot
+    python create_plotable_logs.py /home/james/autobot/autobot_googlenet/autobot_googlenet_train_cp.log
+
 # Plot the learning curve
-    python plot_learning_curve.py /home/james/caffe/ /home/james/autobot/autobot_googlenet/autobot_googlenet_train_cp.log /home/james/autobot/autobot_googlenet/autobot_googlenet_curve.png
+    python plot_learning_curve.py /home/james/caffe/ /home/james/autobot/autobot_googlenet/autobot_googlenet_train.log /home/james/autobot/autobot_googlenet/autobot_googlenet_curve.png
 
 
     /home/james/caffe/build/tools/caffe train --solver /home/james/autobot/Catdog_net/autobot_solver.prototxt 2>&1 | tee /home/james/autobot/Catdog_net/autobot__train.log
+
+
+# Live plot to console during training
+cat ../autobot_googlenet/autobot_googlenet_train.log.train | tail -n 100 | awk '{print $1 " " $3 " " $4}' | feedgnuplot --lines --points --legend 0 'Learning Rate' --legend 1 "Loss Rate" --title "Model Learning and Loss" --y2 2 --terminal 'dumb 120,35' --domain --nodataid  --xlabel 'Time Elapse (Seconds)'     
+
+cat ../autobot_googlenet/autobot_googlenet_train.log.test | tail -n 100 | awk '{print $1 " " $3 " " $4}' | feedgnuplot --lines --nopoints --legend 0 "Test Accuracy" --legend 1 "Test Loss" --title "Model Testing and Accuracy" --y2 2 --terminal 'dumb 120,35' --domain --nodataid --xlabel 'Time Elapse (Seconds)'
+
+# Live plot latest data to console during training
+
+Setup live update
+    python create_plotable_logs.py /home/james/autobot/autobot_googlenet/autobot_googlenet_train_cp.log
+
+    less -n 100 -F ../autobot_googlenet/autobot_googlenet_train_cp.log.train | awk '{print $1 " " $3 " " $4}' | feedgnuplot --lines --points --legend 0 "Learning Rate" --legend "Loss Rate" --title "Model Learning and Loss" --y2 2 --terminal 'dumb 120,35' --domain --nodataid --xlabel 'Time Elapse (Seconds)' 
+
+    tail -n 100 -f ../autobot_googlenet/autobot_googlenet_train_cp.log.test | awk '{print $1 " " $3 " " $4}' | feedgnuplot --lines --nopoints --legend 0 "Test Accuracy" --legend 1 "Test Loss" --title "Model Testing and Accuracy" --y2 2 --terminal 'dumb 120,35' --domain --nodataid  --xlabel 'Time Elapse (Seconds)'
