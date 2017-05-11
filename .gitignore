@@ -1,1 +1,6 @@
-**/*.jpg
+**/**/*.*.[jJ][pP][gG]
+**/*.[jJ][pP][gG]
+
+source_data/**/*jpg
+
+**/*.mdb

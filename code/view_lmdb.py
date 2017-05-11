@@ -18,6 +18,7 @@ def read_images_from_lmdb(db_name, visualize):
 	for idx, (key, value) in enumerate(cursor):
 		datum = caffe_pb2.Datum()
 		datum.ParseFromString(value)
+
 		# X.append(np.array(datum_to_array(datum)))
 		X.append(np.fromstring(datum.data, dtype=np.uint8).reshape(
             datum.height, datum.width,datum.channels )
@@ -29,7 +30,6 @@ def read_images_from_lmdb(db_name, visualize):
 		for i in range(9):
 			img = X[i]
 			plt.subplot(3, 3, i + 1)
-
 			temp = img.shape
 			print "OG: " + str(temp)
 			# plt.axis('off')
@@ -53,7 +53,7 @@ def read_images_from_lmdb(db_name, visualize):
 
 
 traindb = os.path.dirname(os.path.realpath(__file__)) + '/../train_lmdb'
-testdb = os.path.dirname(os.path.realpath(__file__)) + '/../validation_lmdb'
+testdb = os.path.dirname(os.path.realpath(__file__)) + '/../test_lmdb'
 
 read_images_from_lmdb(traindb, 1)
 read_images_from_lmdb(testdb, 1)

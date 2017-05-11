@@ -7,16 +7,9 @@ layer {
   include {
     phase: TRAIN
   }
- # transform_param {
- #   mirror: true
- #   crop_size: 227
- #   mean_value: 104
- #   mean_value: 117
- #   mean_value: 123
- # }
     transform_param {
     mirror: true
-    crop_size: 227
+    crop_size: 256
     mean_file: "/home/james/autobot/mean.binaryproto"
   }
   data_param {
@@ -33,20 +26,13 @@ layer {
   include {
     phase: TEST
   }
- # transform_param {
- #   mirror: false
- #   crop_size: 227
- #   mean_value: 104
- #   mean_value: 117
- #   mean_value: 123
- # }
   transform_param {
     mirror: false
-    crop_size: 227
+    crop_size: 256
     mean_file: "/home/james/autobot/mean.binaryproto"
   }
   data_param {
-    source: "/home/james/autobot/validation_lmdb"
+    source: "/home/james/autobot/test_lmdb"
     batch_size: 25
     backend: LMDB
   }
@@ -2400,7 +2386,7 @@ layer {
     decay_mult: 0
   }
   inner_product_param {
-    num_output: 10
+    num_output: 3
     weight_filler {
       type: "xavier"
     }
@@ -2438,6 +2424,6 @@ layer {
     phase: TEST
   }
   accuracy_param {
-    top_k: 5
+    top_k: 3
   }
 }

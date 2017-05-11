@@ -3,7 +3,7 @@ layer {
   name: "data"
   type: "Input"
   top: "data"
-  input_param { shape: { dim: 10 dim: 3 dim: 227 dim: 227 } }
+  input_param { shape: { dim: 10 dim: 3 dim: 256 dim: 256 } }
 }
 layer {
   name: "conv1/7x7_s2"
@@ -2126,10 +2126,10 @@ layer {
   }
 }
 layer {
-  name: "autobot1/loss3/classifier"
+  name: "loss3/classifier"
   type: "InnerProduct"
   bottom: "pool5/7x7_s1"
-  top: "autobot1/loss3/classifier"
+  top: "loss3/classifier"
   param {
     lr_mult: 1
     decay_mult: 1
@@ -2139,7 +2139,7 @@ layer {
     decay_mult: 0
   }
   inner_product_param {
-    num_output: 2
+    num_output: 3
     weight_filler {
       type: "xavier"
     }
@@ -2152,6 +2152,6 @@ layer {
 layer {
   name: "prob"
   type: "Softmax"
-  bottom: "autobot1/loss3/classifier"
+  bottom: "loss3/classifier"
   top: "prob"
 }

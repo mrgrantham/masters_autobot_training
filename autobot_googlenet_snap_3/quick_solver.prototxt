@@ -11,5 +11,5 @@ max_iter: 2400000
 momentum: 0.9
 weight_decay: 0.0002
 snapshot: 40000
-snapshot_prefix: "autobot_googlenet_restart_snap/autobot_googlenet"
+snapshot_prefix: "autobot_googlenet_snap_3/autobot_googlenet"
 solver_mode: GPU

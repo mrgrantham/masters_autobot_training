@@ -48,8 +48,8 @@ def make_datum(img, label):
         width=IMAGE_WIDTH,
         height=IMAGE_HEIGHT,
         label=label,
-        # data=np.rollaxis(img, 2).tostring())
-        data=img.tostring())
+        data=np.rollaxis(img, 2).tostring())
+        # data=img.tostring())
 
 train_lmdb = os.path.dirname(os.path.realpath(__file__)) + '/../train_lmdb'
 validation_lmdb = os.path.dirname(os.path.realpath(__file__)) + '/../validation_lmdb'
@@ -75,18 +75,12 @@ with in_db.begin(write=True) as in_txn:
         #     continue
         img = cv2.imread(img_path, cv2.IMREAD_COLOR)
         img = transform_img(img, img_width=IMAGE_WIDTH, img_height=IMAGE_HEIGHT)
-        if 'hallways' in img_path:
+        if 'door_closed' in img_path:
             label = 0
-        elif 'pedestrian' in img_path:
-            label = 1
-        elif 'door_closed' in img_path:
-            label = 2
-        elif 'door_opened' in img_path:
-            label = 3
         elif 'doorstop' in img_path:
-            label = 4
+            label = 1
         else:
-            label = 5
+            print "else"
         datum = make_datum(img, label)
         in_txn.put('{:0>5d}'.format(in_idx), datum.SerializeToString())
         print '{:0>5d}'.format(in_idx) + ':' + img_path
@@ -103,18 +97,12 @@ with in_db.begin(write=True) as in_txn:
         #     continue
         img = cv2.imread(img_path, cv2.IMREAD_COLOR)
         img = transform_img(img, img_width=IMAGE_WIDTH, img_height=IMAGE_HEIGHT)
-        if 'hallways' in img_path:
+        if 'door_closed' in img_path:
             label = 0
-        elif 'pedestrian' in img_path:
-            label = 1
-        elif 'door_closed' in img_path:
-            label = 2
-        elif 'door_opened' in img_path:
-            label = 3
         elif 'doorstop' in img_path:
-            label = 4
+            label = 1
         else:
-            label = 5
+            print "else"
         datum = make_datum(img, label)
         in_txn.put('{:0>5d}'.format(in_idx), datum.SerializeToString())
         print '{:0>5d}'.format(in_idx) + ':' + img_path
