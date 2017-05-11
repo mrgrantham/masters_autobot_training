@@ -1,6 +1,12 @@
 **/**/*.*.[jJ][pP][gG]
 **/*.[jJ][pP][gG]
-
-source_data/**/*jpg
-
+*.jpg
+**/**/*.jpg
+source_data/**/*.jpg
+**/**/*.mp4
+source_data/**/*.mp4
 **/*.mdb
+source_data/*
+train/*
+test/*
+
