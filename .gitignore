@@ -9,4 +9,5 @@ source_data/**/*.mp4
 source_data/*
 train/*
 test/*
-
+**/*.caffemodel
+**/*.solverstate
