@@ -11,3 +11,4 @@ train/*
 test/*
 **/*.caffemodel
 **/*.solverstate
+**/*.log
