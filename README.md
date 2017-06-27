@@ -75,9 +75,9 @@ Enter the following command to initiate training
 
 
 # Live plot to console during training
-cat ../autobot_googlenet/autobot_googlenet_train.log.train | tail -n 100 | awk '{print $1 " " $3 " " $4}' | feedgnuplot --lines --points --legend 0 'Learning Rate' --legend 1 "Loss Rate" --title "Model Learning and Loss" --y2 2 --terminal 'dumb 120,35' --domain --nodataid  --xlabel 'Time Elapse (Seconds)'     
+    cat ../autobot_googlenet/autobot_googlenet_train.log.train | tail -n 100 | awk '{print $1 " " $3 " " $4}' | feedgnuplot --lines --points --legend 0 'Learning Rate' --legend 1 "Loss Rate" --title "Model Learning and Loss" --y2 2 --terminal 'dumb 120,35' --domain --nodataid  --xlabel 'Time Elapse (Seconds)'     
 
-cat ../autobot_googlenet/autobot_googlenet_train.log.test | tail -n 100 | awk '{print $1 " " $3 " " $4}' | feedgnuplot --lines --nopoints --legend 0 "Test Accuracy" --legend 1 "Test Loss" --title "Model Testing and Accuracy" --y2 2 --terminal 'dumb 120,35' --domain --nodataid --xlabel 'Time Elapse (Seconds)'
+    cat ../autobot_googlenet/autobot_googlenet_train.log.test | tail -n 100 | awk '{print $1 " " $3 " " $4}' | feedgnuplot --lines --nopoints --legend 0 "Test Accuracy" --legend 1 "Test Loss" --title "Model Testing and Accuracy" --y2 2 --terminal 'dumb 120,35' --domain --nodataid --xlabel 'Time Elapse (Seconds)'
 
 # Live plot latest data to console during training
 
@@ -89,4 +89,4 @@ Setup live update
     tail -n 100 -f ../autobot_googlenet/autobot_googlenet_train_cp.log.test | awk '{print $1 " " $3 " " $4}' | feedgnuplot --lines --nopoints --legend 0 "Test Accuracy" --legend 1 "Test Loss" --title "Model Testing and Accuracy" --y2 2 --terminal 'dumb 120,35' --domain --nodataid  --xlabel 'Time Elapse (Seconds)'
 
 # regular save of learning curve
-while true; do python plot_learning_curve.py /home/james/caffe/ /home/james/autobot/autobot_googlenet_3classifier/autobot_googlenet_train.log /home/james/autobot/autobot_googlenet_3classifier/autobot_googlenet_curve.png; sleep 1200; done^
+while true; do python plot_learning_curve.py /home/james/caffe/ /home/james/autobot/autobot_alexnet2/autobot_alexnet2.log /home/james/autobot/autobot_alexnet2/autobot_alexnet_curve.png; sleep 1200; done

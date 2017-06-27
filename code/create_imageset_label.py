@@ -33,14 +33,16 @@ print 'train list: ' + train_list
 
 with open(train_list, "a") as myfile:    
     for id, img_path in enumerate(train_data):
-        if 'door_closed' in img_path:
+        if 'door_' in img_path:
             label = 0
         elif 'doorstop' in img_path:
             label = 1
-        elif 'pedestrian' in img_path:
+        elif 'person' in img_path:
             label = 2
+        elif 'desk' in img_path:
+            label = 3
         else:
-            print "else"
+            print "unsure: " + img_path
         line = os.path.basename(img_path) +  " " + str(label) + "\n"
         print line
         myfile.write(line)

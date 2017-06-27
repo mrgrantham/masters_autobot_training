@@ -12,8 +12,8 @@ VAL_DATA_ROOT=$PROJECT_DIR/test/
 # already been resized using another tool.
 RESIZE=true
 if $RESIZE; then
-  RESIZE_HEIGHT=256
-  RESIZE_WIDTH=256
+  RESIZE_HEIGHT=224
+  RESIZE_WIDTH=224
 else
   RESIZE_HEIGHT=0
   RESIZE_WIDTH=0
